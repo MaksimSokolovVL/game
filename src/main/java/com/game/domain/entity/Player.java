@@ -5,8 +5,12 @@ import com.game.domain.enums.Profession;
 import com.game.domain.enums.Race;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.Instant;
@@ -15,11 +19,13 @@ import java.time.Instant;
 @Table(name = "player")
 public class Player {
     @Id
-    @GeneratedValue()
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private String title;
+    @Enumerated(EnumType.STRING)
     private Race race;
+    @Enumerated(EnumType.STRING)
     private Profession profession;
     private Instant birthday;
     private Boolean banned;

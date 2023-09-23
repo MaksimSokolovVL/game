@@ -7,7 +7,7 @@ import com.game.domain.enums.Race;
 import java.time.Instant;
 
 public class PlayerBuilder {
-    private long id;
+    private Long id;
     private String name;
     private String title;
     private Race race;
@@ -18,7 +18,7 @@ public class PlayerBuilder {
     private int level;
     private int untilNextLevel;
 
-    public PlayerBuilder setId(long id) {
+    public PlayerBuilder setId(Long id) {
         this.id = id;
         return this;
     }
