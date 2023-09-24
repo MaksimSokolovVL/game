@@ -62,6 +62,28 @@ public class Player {
         this.untilNextLevel = untilNextLevel;
     }
 
+    public Player(
+            String name,
+            String title,
+            Race race,
+            Profession profession,
+            Instant birthday,
+            Boolean banned,
+            Integer exp,
+            Integer level,
+            Integer untilNextLevel
+    ) {
+        this.name = name;
+        this.title = title;
+        this.race = race;
+        this.profession = profession;
+        this.birthday = birthday;
+        this.banned = banned;
+        this.exp = exp;
+        this.level = level;
+        this.untilNextLevel = untilNextLevel;
+    }
+
     public long getId() {
         return id;
     }
