@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PlayerDao {
     List<Player> getAllUsers();
+    List<Player> getCountUsers(Integer count);
 }

@@ -5,7 +5,6 @@ import com.game.domain.enums.Profession;
 import com.game.domain.enums.Race;
 
 import javax.persistence.Column;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,7 +20,9 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name", length = 12)
     private String name;
+    @Column(name = "title", length = 30)
     private String title;
     @Enumerated(EnumType.STRING)
     private Race race;

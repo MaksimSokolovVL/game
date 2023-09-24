@@ -9,17 +9,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class MapperPlayerToPlayersResponseDto {
+public class MapperPlayersToDto {
 
-    public List<PlayerResponseDto> playersToPlayersDto(List<Player> playerList) {
-
+    public List<PlayerResponseDto> playersToPlayersResponseDto(List<Player> playerList) {
         return playerList.stream().map(player -> new PlayerResponseDtoBuilder()
                 .setId(player.getId())
                 .setName(player.getName())
                 .setTitle(player.getTitle())
                 .setRace(player.getRace())
                 .setProfession(player.getProfession())
-                .setBirthday(player.getBirthday().getEpochSecond())
+                .setBirthday(player.getBirthday().toEpochMilli())
                 .setBanned(player.getBanned())
                 .setExp(player.getExp())
                 .setLevel(player.getLevel())
