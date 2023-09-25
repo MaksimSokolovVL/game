@@ -7,7 +7,6 @@ public class WebError {
 
     private final String message;
 
-
     public WebError(HttpStatus status, String message) {
         this.status = status;
         this.message = message;

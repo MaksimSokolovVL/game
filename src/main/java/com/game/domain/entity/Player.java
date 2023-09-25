@@ -1,6 +1,7 @@
 package com.game.domain.entity;
 
 
+import com.game.domain.CommonPlayer;
 import com.game.domain.enums.Profession;
 import com.game.domain.enums.Race;
 
@@ -16,7 +17,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "player")
-public class Player {
+public class Player implements CommonPlayer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,8 +31,7 @@ public class Player {
     private Profession profession;
     private Instant birthday;
     private Boolean banned;
-    @Column(name = "experience")
-    private Integer exp;
+    private Integer experience;
     private Integer level;
     private Integer untilNextLevel;
 
@@ -46,7 +46,7 @@ public class Player {
             Profession profession,
             Instant birthday,
             Boolean banned,
-            Integer exp,
+            Integer experience,
             Integer level,
             Integer untilNextLevel
     ) {
@@ -57,7 +57,7 @@ public class Player {
         this.profession = profession;
         this.birthday = birthday;
         this.banned = banned;
-        this.exp = exp;
+        this.experience = experience;
         this.level = level;
         this.untilNextLevel = untilNextLevel;
     }
@@ -69,7 +69,7 @@ public class Player {
             Profession profession,
             Instant birthday,
             Boolean banned,
-            Integer exp,
+            Integer experience,
             Integer level,
             Integer untilNextLevel
     ) {
@@ -79,7 +79,7 @@ public class Player {
         this.profession = profession;
         this.birthday = birthday;
         this.banned = banned;
-        this.exp = exp;
+        this.experience = experience;
         this.level = level;
         this.untilNextLevel = untilNextLevel;
     }
@@ -140,12 +140,12 @@ public class Player {
         this.banned = banned;
     }
 
-    public Integer getExp() {
-        return exp;
+    public Integer getExperience() {
+        return experience;
     }
 
-    public void setExp(Integer exp) {
-        this.exp = exp;
+    public void setExperience(Integer experience) {
+        this.experience = experience;
     }
 
     public Integer getLevel() {
@@ -162,5 +162,10 @@ public class Player {
 
     public void setUntilNextLevel(Integer untilNextLevel) {
         this.untilNextLevel = untilNextLevel;
+    }
+
+    @Override
+    public Instant getInstantBirthday() {
+        return birthday;
     }
 }

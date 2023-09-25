@@ -6,6 +6,7 @@ import com.game.domain.enums.Profession;
 import com.game.domain.enums.Race;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.function.Function;
 
 public class PlayerFilterUtility {
@@ -28,20 +29,22 @@ public class PlayerFilterUtility {
     }
 
     public static <T> boolean isActiveBetween(Player player, Function<Player, T> valueExtractor, T filterMinValue, T filterMaxValue) {
-        if (filterMinValue == null || filterMaxValue == null) {
+        if (Objects.isNull(filterMinValue) && Objects.isNull(filterMaxValue)) {
             return true;
         }
 
-        if (filterMinValue instanceof Integer && filterMaxValue instanceof Integer) {
-            int integerMinValue = (int) filterMinValue;
-            int integerMaxValue = (int) filterMaxValue;
+        if (filterMinValue instanceof Integer || filterMaxValue instanceof Integer) {
+            int integerMinValue = (Objects.isNull(filterMinValue)) ? 0 : (int) filterMinValue;
+            int integerMaxValue = (Objects.isNull(filterMaxValue)) ? 10_000_000 : (int) filterMaxValue;
             int playerValue = (int) valueExtractor.apply(player);
             return playerValue >= integerMinValue && playerValue <= integerMaxValue;
         }
 
-        if (filterMinValue instanceof Long && filterMaxValue instanceof Long) {
-            long minValue = (long) filterMinValue;
-            long maxValue = (long) filterMaxValue;
+        if (filterMinValue instanceof Long || filterMaxValue instanceof Long) {
+            long minValue = (Objects.isNull(filterMinValue)) ? 0 : (long) filterMinValue;
+            long maxValue = (Objects.isNull(filterMaxValue)) ?
+                    Instant.parse("3000-01-01T00:00:00.00Z").toEpochMilli()
+                    : (long) filterMaxValue;
             Instant playerValue = (Instant) valueExtractor.apply(player);
             long playerTimestamp = playerValue.toEpochMilli();
             return playerTimestamp >= minValue && playerTimestamp <= maxValue;
@@ -57,7 +60,7 @@ public class PlayerFilterUtility {
                 result = player1.getName().compareTo(player2.getName());
                 break;
             case EXPERIENCE:
-                result = Integer.compare(player1.getExp(), player2.getExp());
+                result = Integer.compare(player1.getExperience(), player2.getExperience());
                 break;
             case BIRTHDAY:
                 result = player1.getBirthday().compareTo(player2.getBirthday());

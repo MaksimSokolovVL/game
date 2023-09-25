@@ -1,9 +1,10 @@
 package com.game.domain.dto;
 
+import com.game.domain.CommonPlayer;
 import com.game.domain.enums.Profession;
 import com.game.domain.enums.Race;
 
-public class PlayerCreateRequestDto {
+public class PlayerUpdateRequestDto implements CommonPlayer {
     private String name;
     private String title;
     private Race race;
@@ -66,5 +67,10 @@ public class PlayerCreateRequestDto {
 
     public void setExperience(Integer experience) {
         this.experience = experience;
+    }
+
+    @Override
+    public Long getLongBirthday() {
+        return birthday;
     }
 }

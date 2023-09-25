@@ -2,7 +2,7 @@ package com.game.mapper;
 
 import com.game.domain.builder.PlayerBuilder;
 import com.game.domain.builder.PlayerResponseDtoBuilder;
-import com.game.domain.dto.PlayerCreateRequestDto;
+import com.game.domain.dto.PlayerUpdateRequestDto;
 import com.game.domain.dto.PlayerResponseDto;
 import com.game.domain.entity.Player;
 import com.game.domain.model.CharacterInfo;
@@ -25,7 +25,7 @@ public class PlayerDtoMapper {
                 .setProfession(player.getProfession())
                 .setBirthday(player.getBirthday().toEpochMilli())
                 .setBanned(player.getBanned())
-                .setExp(player.getExp())
+                .setExp(player.getExperience())
                 .setLevel(player.getLevel())
                 .setUntilNextLevel(player.getUntilNextLevel())
                 .build()
@@ -41,14 +41,14 @@ public class PlayerDtoMapper {
                 .setProfession(player.getProfession())
                 .setBirthday(player.getBirthday().toEpochMilli())
                 .setBanned(player.getBanned())
-                .setExp(player.getExp())
+                .setExp(player.getExperience())
                 .setLevel(player.getLevel())
                 .setUntilNextLevel(player.getUntilNextLevel())
                 .build();
     }
 
 
-    public Player playerRequestDtoToPlayer(PlayerCreateRequestDto playerRequestDto) {
+    public Player playerRequestDtoToPlayer(PlayerUpdateRequestDto playerRequestDto) {
         CharacterInfo characterInfo = CharacterLevelCalculator.calculateCharacterInfo(playerRequestDto.getExperience());
         return new PlayerBuilder()
                 .setName(playerRequestDto.getName())

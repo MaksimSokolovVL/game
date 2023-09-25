@@ -1,9 +1,10 @@
 package com.game.domain.dto;
 
+import com.game.domain.CommonPlayer;
 import com.game.domain.enums.Profession;
 import com.game.domain.enums.Race;
 
-public class PlayerResponseDto {
+public class PlayerResponseDto implements CommonPlayer {
     private final Long id;
     private final String name;
     private final String title;
@@ -77,5 +78,10 @@ public class PlayerResponseDto {
 
     public Integer getUntilNextLevel() {
         return untilNextLevel;
+    }
+
+    @Override
+    public Long getLongBirthday() {
+        return birthday;
     }
 }

@@ -1,3 +1,4 @@
+
 function loadContent(root, suffix, currentPage) {
 
     let objects = JSON.parse(Get(root + "/rest/players" + suffix).responseText);
@@ -215,6 +216,7 @@ function createPaging(playersInPage, playersSummary, currentPage) {
             paggingBar.appendChild(li);
         }
     }
+
 }
 
 function editButtonClick(root, element, id) {
@@ -356,6 +358,7 @@ function editButtonClick(root, element, id) {
     tr.appendChild(td11);
 
     element.insertAdjacentElement("afterEnd", tr);
+
 }
 
 function sendUpdate(root, id) {

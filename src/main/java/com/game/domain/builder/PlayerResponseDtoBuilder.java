@@ -1,11 +1,8 @@
 package com.game.domain.builder;
 
 import com.game.domain.dto.PlayerResponseDto;
-import com.game.domain.entity.Player;
 import com.game.domain.enums.Profession;
 import com.game.domain.enums.Race;
-
-import java.time.Instant;
 
 public class PlayerResponseDtoBuilder {
     private Long id;

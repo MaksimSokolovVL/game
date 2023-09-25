@@ -3,6 +3,7 @@ package com.game.controller;
 
 import com.game.domain.model.WebError;
 import com.game.exception.PlayerCreationException;
+import com.game.exception.DeletePlayerBiIdException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,11 @@ public class ExceptionControllerAdvice {
         return handlerException(HttpStatus.BAD_REQUEST, ex);
     }
 
+    @ExceptionHandler(DeletePlayerBiIdException.class)
+    public ResponseEntity<WebError> deletePlayerBiIdException(DeletePlayerBiIdException ex) {
+        return handlerException(HttpStatus.NOT_FOUND, ex);
+    }
+
     @ExceptionHandler(PlayerCreationException.class)
     public ResponseEntity<WebError> playerCreationException(PlayerCreationException ex) {
         return handlerException(HttpStatus.BAD_REQUEST, ex);
@@ -31,7 +37,6 @@ public class ExceptionControllerAdvice {
 
    @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<WebError> entityNotFoundException(EntityNotFoundException ex) {
-
         return handlerException(HttpStatus.NOT_FOUND, ex);
     }
 
