@@ -21,10 +21,6 @@ public class PlayerDaoImpl implements PlayerDao {
 
     @Override
     public List<Player> getAllPlayers() {
-//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-//        CriteriaQuery<Player> query = criteriaBuilder.createQuery(Player.class);
-//        query.from(Player.class);
-//        return entityManager.createQuery(query).getResultList();
         String jpql = "SELECT p FROM Player p";
         return entityManager.createQuery(jpql, Player.class).getResultList();
     }
@@ -63,13 +59,9 @@ public class PlayerDaoImpl implements PlayerDao {
         if (currentPlayer == null) {
             throw new DeletePlayerBiIdException(String.format("Players с таким id:%d не найден", id));
         }
-
         validationAndUpdateFieldsPlayer(playerRequestDto, currentPlayer);
-
         entityManager.merge(currentPlayer);
 
         return currentPlayer;
     }
-
-
 }

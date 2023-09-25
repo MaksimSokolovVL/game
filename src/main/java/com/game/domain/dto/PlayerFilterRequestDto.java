@@ -4,7 +4,6 @@ import com.game.controller.enums.PlayerOrder;
 import com.game.domain.dto.abstracts.AbstractPlayerRequestDto;
 
 public class PlayerFilterRequestDto extends AbstractPlayerRequestDto {
-
     private PlayerOrder order = PlayerOrder.ID;
     private Integer pageNumber = 0;
     private Integer pageSize = 3;
@@ -20,7 +19,6 @@ public class PlayerFilterRequestDto extends AbstractPlayerRequestDto {
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
-
 
     public PlayerOrder getOrder() {
         return order;

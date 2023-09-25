@@ -1,9 +1,9 @@
 package com.game.service.impl;
 
 import com.game.domain.dto.PlayerCountRequestDto;
-import com.game.domain.dto.PlayerUpdateRequestDto;
 import com.game.domain.dto.PlayerFilterRequestDto;
 import com.game.domain.dto.PlayerResponseDto;
+import com.game.domain.dto.PlayerUpdateRequestDto;
 import com.game.domain.entity.Player;
 import com.game.mapper.PlayerDtoMapper;
 import com.game.repository.PlayerDao;
@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.game.util.PlayerFilterUtility.dynamicComparator;
-import static com.game.util.PlayerFilterUtility.isActive;
-import static com.game.util.PlayerFilterUtility.isActiveBetween;
+import static com.game.util.PlayerFilterUtility.filterPlayersByFields;
 import static com.game.util.ValidationUtility.isDtoFieldsNotNull;
 import static com.game.util.ValidationUtility.verifyPlayerFields;
 
@@ -41,15 +40,7 @@ public class PlayerServiceImpl implements PlayerService {
     public ResponseEntity<List<PlayerResponseDto>> getAllPlayers(PlayerFilterRequestDto filterRequestDto) {
         List<Player> players = playerRepo.getAllPlayers();
 
-        players = players.stream()
-                .filter(player -> isActive(player, Player::getName, filterRequestDto.getName()))
-                .filter(player -> isActive(player, Player::getTitle, filterRequestDto.getTitle()))
-                .filter(player -> isActive(player, Player::getRace, filterRequestDto.getRace()))
-                .filter(player -> isActive(player, Player::getProfession, filterRequestDto.getProfession()))
-                .filter(player -> isActive(player, Player::getBanned, filterRequestDto.getBanned()))
-                .filter(player -> isActiveBetween(player, Player::getLevel, filterRequestDto.getMinLevel(), filterRequestDto.getMaxLevel()))
-                .filter(player -> isActiveBetween(player, Player::getExperience, filterRequestDto.getMinExperience(), filterRequestDto.getMaxExperience()))
-                .filter(player -> isActiveBetween(player, Player::getBirthday, filterRequestDto.getAfter(), filterRequestDto.getBefore()))
+        players = filterPlayersByFields(filterRequestDto, players).stream()
                 .sorted((player1, player2) -> dynamicComparator(player1, player2, filterRequestDto))
                 .collect(Collectors.toList());
 
@@ -66,16 +57,7 @@ public class PlayerServiceImpl implements PlayerService {
     public ResponseEntity<Integer> getCountPlayers(PlayerCountRequestDto countRequestDto) {
         List<Player> players = playerRepo.getAllPlayers();
 
-        players = players.stream()
-                .filter(player -> isActive(player, Player::getName, countRequestDto.getName()))
-                .filter(player -> isActive(player, Player::getTitle, countRequestDto.getTitle()))
-                .filter(player -> isActive(player, Player::getRace, countRequestDto.getRace()))
-                .filter(player -> isActive(player, Player::getProfession, countRequestDto.getProfession()))
-                .filter(player -> isActive(player, Player::getBanned, countRequestDto.getBanned()))
-                .filter(player -> isActiveBetween(player, Player::getLevel, countRequestDto.getMinLevel(), countRequestDto.getMaxLevel()))
-                .filter(player -> isActiveBetween(player, Player::getExperience, countRequestDto.getMinExperience(), countRequestDto.getMaxExperience()))
-                .filter(player -> isActiveBetween(player, Player::getBirthday, countRequestDto.getAfter(), countRequestDto.getBefore()))
-                .collect(Collectors.toList());
+        players = filterPlayersByFields(countRequestDto, players);
         return new ResponseEntity<>(players.size(), HttpStatus.OK);
     }
 

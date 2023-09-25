@@ -47,7 +47,6 @@ public class PlayerDtoMapper {
                 .build();
     }
 
-
     public Player playerRequestDtoToPlayer(PlayerUpdateRequestDto playerRequestDto) {
         CharacterInfo characterInfo = CharacterLevelCalculator.calculateCharacterInfo(playerRequestDto.getExperience());
         return new PlayerBuilder()

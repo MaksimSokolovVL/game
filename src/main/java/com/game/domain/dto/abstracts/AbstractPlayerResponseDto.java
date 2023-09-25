@@ -4,10 +4,6 @@ import com.game.domain.enums.Profession;
 import com.game.domain.enums.Race;
 
 public abstract class AbstractPlayerResponseDto extends AbstractPlayerDto {
-//    private String name;
-//    private String title;
-//    private Race race;
-//    private Profession profession;
     private Long birthday;
     private Boolean banned;
     private Integer experience;

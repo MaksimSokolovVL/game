@@ -69,7 +69,6 @@ public class ValidationUtility {
         }
 
         CharacterInfo characterInfo = CharacterLevelCalculator.calculateCharacterInfo(currentPlayer.getExperience());
-
         currentPlayer.setLevel(characterInfo.getCurrentLevel());
         currentPlayer.setUntilNextLevel(characterInfo.getUntilNextLevel());
 

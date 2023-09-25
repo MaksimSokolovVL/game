@@ -1,13 +1,6 @@
 package com.game.domain.dto.abstracts;
 
-import com.game.domain.enums.Profession;
-import com.game.domain.enums.Race;
-
 public abstract class AbstractPlayerRequestDto extends AbstractPlayerDto {
-//    private String name;
-//    private String title;
-//    private Race race;
-//    private Profession profession;
     private Long after;
     private Long before;
     private Boolean banned;
@@ -15,22 +8,6 @@ public abstract class AbstractPlayerRequestDto extends AbstractPlayerDto {
     private Integer maxExperience;
     private Integer minLevel;
     private Integer maxLevel;
-
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    public Race getRace() {
-//        return race;
-//    }
-//
-//    public Profession getProfession() {
-//        return profession;
-//    }
 
     public Long getAfter() {
         return after;
@@ -59,22 +36,6 @@ public abstract class AbstractPlayerRequestDto extends AbstractPlayerDto {
     public Integer getMaxLevel() {
         return maxLevel;
     }
-
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
-//
-//    public void setRace(Race race) {
-//        this.race = race;
-//    }
-//
-//    public void setProfession(Profession profession) {
-//        this.profession = profession;
-//    }
 
     public void setAfter(Long after) {
         this.after = after;

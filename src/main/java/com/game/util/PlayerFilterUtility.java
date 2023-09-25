@@ -1,13 +1,16 @@
 package com.game.util;
 
 import com.game.domain.dto.PlayerFilterRequestDto;
+import com.game.domain.dto.abstracts.AbstractPlayerRequestDto;
 import com.game.domain.entity.Player;
 import com.game.domain.enums.Profession;
 import com.game.domain.enums.Race;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class PlayerFilterUtility {
     public static <T> boolean isActive(Player player, Function<Player, T> valueExtractor, T filterValue) {
@@ -69,5 +72,18 @@ public class PlayerFilterUtility {
                 result = Long.compare(player1.getId(), player2.getId());
         }
         return result;
+    }
+
+    public static <T extends AbstractPlayerRequestDto> List<Player> filterPlayersByFields(T countRequestDto, List<Player> players) {
+        return players.stream()
+                .filter(player -> isActive(player, Player::getName, countRequestDto.getName()))
+                .filter(player -> isActive(player, Player::getTitle, countRequestDto.getTitle()))
+                .filter(player -> isActive(player, Player::getRace, countRequestDto.getRace()))
+                .filter(player -> isActive(player, Player::getProfession, countRequestDto.getProfession()))
+                .filter(player -> isActive(player, Player::getBanned, countRequestDto.getBanned()))
+                .filter(player -> isActiveBetween(player, Player::getLevel, countRequestDto.getMinLevel(), countRequestDto.getMaxLevel()))
+                .filter(player -> isActiveBetween(player, Player::getExperience, countRequestDto.getMinExperience(), countRequestDto.getMaxExperience()))
+                .filter(player -> isActiveBetween(player, Player::getBirthday, countRequestDto.getAfter(), countRequestDto.getBefore()))
+                .collect(Collectors.toList());
     }
 }
