@@ -16,31 +16,31 @@ import javax.persistence.EntityNotFoundException;
 public class ExceptionControllerAdvice {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<WebError> illegalArgumentException(IllegalArgumentException ex) {
-        return handlerException(HttpStatus.BAD_REQUEST, ex);
+    public ResponseEntity<WebError> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return handleException(HttpStatus.BAD_REQUEST, ex);
     }
 
     @ExceptionHandler(DeletePlayerBiIdException.class)
-    public ResponseEntity<WebError> deletePlayerBiIdException(DeletePlayerBiIdException ex) {
-        return handlerException(HttpStatus.NOT_FOUND, ex);
+    public ResponseEntity<WebError> handleDeletePlayerBiIdException(DeletePlayerBiIdException ex) {
+        return handleException(HttpStatus.NOT_FOUND, ex);
     }
 
     @ExceptionHandler(PlayerCreationException.class)
-    public ResponseEntity<WebError> playerCreationException(PlayerCreationException ex) {
-        return handlerException(HttpStatus.BAD_REQUEST, ex);
+    public ResponseEntity<WebError> handlePlayerCreationException(PlayerCreationException ex) {
+        return handleException(HttpStatus.BAD_REQUEST, ex);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<WebError> dataIntegrityViolationException(DataIntegrityViolationException ex) {
-         return handlerException(HttpStatus.BAD_REQUEST, ex);
+    public ResponseEntity<WebError> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+         return handleException(HttpStatus.BAD_REQUEST, ex);
     }
 
    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<WebError> entityNotFoundException(EntityNotFoundException ex) {
-        return handlerException(HttpStatus.NOT_FOUND, ex);
+    public ResponseEntity<WebError> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return handleException(HttpStatus.NOT_FOUND, ex);
     }
 
-    private ResponseEntity<WebError> handlerException(HttpStatus status, Exception exception) {
+    private ResponseEntity<WebError> handleException(HttpStatus status, Exception exception) {
         return ResponseEntity
                 .status(status)
                 .body(
