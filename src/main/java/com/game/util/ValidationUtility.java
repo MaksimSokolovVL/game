@@ -8,7 +8,10 @@ import com.game.domain.model.CharacterInfo;
 import com.game.exception.PlayerCreationException;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -82,4 +85,33 @@ public class ValidationUtility {
             setter.accept(value);
         }
     }
+
+//    public static Player validationAndUpdateFieldsPlayer(PlayerUpdateRequestDto playerRequestDto, Player currentPlayer) {
+//        Field[] declaredFields = playerRequestDto.getClass().getDeclaredFields();
+//        for (Field field : declaredFields) {
+//            try {
+//                field.setAccessible(true);
+//                Object value = field.get(playerRequestDto);
+//                if (value != null) {
+//                    String fieldName = field.getName();
+//                    String setterName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+//                    Method setter = currentPlayer.getClass().getMethod(setterName, field.getType());
+//                    setter.invoke(currentPlayer, value);
+//                }
+//            } catch (Exception e) {
+//                throw new RuntimeException("Reflection API - что-то сделал не так)))");
+//            }
+//        }
+//        if (playerRequestDto.getBirthday() != null) {
+//            currentPlayer.setBirthday(Instant.ofEpochMilli(playerRequestDto.getBirthday()));
+//        }
+//
+//        CharacterInfo characterInfo = CharacterLevelCalculator.calculateCharacterInfo(currentPlayer.getExperience());
+//        currentPlayer.setLevel(characterInfo.getCurrentLevel());
+//        currentPlayer.setUntilNextLevel(characterInfo.getUntilNextLevel());
+//
+//        verifyPlayerFields(currentPlayer);
+//
+//        return currentPlayer;
+//    }
 }

@@ -6,7 +6,7 @@ import com.game.domain.dto.PlayerResponseDto;
 import com.game.domain.dto.PlayerUpdateRequestDto;
 import com.game.domain.entity.Player;
 import com.game.mapper.PlayerDtoMapper;
-import com.game.repository.PlayerDao;
+import com.game.repository.PlayerRepo;
 import com.game.service.PlayerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +20,18 @@ import java.util.stream.Collectors;
 import static com.game.util.PlayerFilterUtility.dynamicComparator;
 import static com.game.util.PlayerFilterUtility.filterPlayersByFields;
 import static com.game.util.ValidationUtility.isDtoFieldsNotNull;
+import static com.game.util.ValidationUtility.validationAndUpdateFieldsPlayer;
 import static com.game.util.ValidationUtility.verifyPlayerFields;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
-    private final PlayerDao playerRepo;
+    //    private final PlayerDao playerRepo;
+    private final PlayerRepo playerRepo;
     private final PlayerDtoMapper mapper;
 
     public PlayerServiceImpl(
-            PlayerDao playerRepo,
+//            PlayerDao playerRepo,
+            PlayerRepo playerRepo,
             PlayerDtoMapper playerDtoMapper
     ) {
         this.playerRepo = playerRepo;
@@ -38,7 +41,8 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     @Transactional(readOnly = true)
     public ResponseEntity<List<PlayerResponseDto>> getAllPlayers(PlayerFilterRequestDto filterRequestDto) {
-        List<Player> players = playerRepo.getAllPlayers();
+//        List<Player> players = playerRepo.getAllPlayers();
+        List<Player> players = playerRepo.findAll();
 
         players = filterPlayersByFields(filterRequestDto, players).stream()
                 .sorted((player1, player2) -> dynamicComparator(player1, player2, filterRequestDto))
@@ -55,7 +59,8 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public ResponseEntity<Integer> getCountPlayers(PlayerCountRequestDto countRequestDto) {
-        List<Player> players = playerRepo.getAllPlayers();
+//        List<Player> players = playerRepo.getAllPlayers();
+        List<Player> players = playerRepo.findAll();
 
         players = filterPlayersByFields(countRequestDto, players);
         return new ResponseEntity<>(players.size(), HttpStatus.OK);
@@ -73,9 +78,13 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     @Transactional
     public ResponseEntity<PlayerResponseDto> createPlayerToDatabase(PlayerUpdateRequestDto playerRequestDto) {
+
         isDtoFieldsNotNull(playerRequestDto);
         Player player = mapper.playerRequestDtoToPlayer(verifyPlayerFields(playerRequestDto));
-        Player resultPlayer = playerRepo.savePlayer(player);
+
+
+//        Player resultPlayer = playerRepo.savePlayer(player);
+        Player resultPlayer = playerRepo.save(player);
 
         return new ResponseEntity<>(
                 mapper.playerToPlayerResponseDto(resultPlayer),
@@ -88,7 +97,8 @@ public class PlayerServiceImpl implements PlayerService {
             throw new IllegalArgumentException("Не верный формат id");
         }
 
-        return playerRepo.getPlayer(id)
+//        return playerRepo.getPlayer(id)
+        return playerRepo.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException(String.format("Players с таким id:%d не найден", id)));
     }
@@ -99,7 +109,11 @@ public class PlayerServiceImpl implements PlayerService {
         if (id == 0) {
             throw new IllegalArgumentException();
         }
-        playerRepo.delete(id);
+        playerRepo.findById(id).orElseThrow(() ->
+                new EntityNotFoundException(String.format("Players с таким id:%d не найден", id)));
+
+        playerRepo.deleteById(id);
+//        playerRepo.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -109,8 +123,16 @@ public class PlayerServiceImpl implements PlayerService {
         if (id == 0) {
             throw new IllegalArgumentException();
         }
+        Player currentPlayer = playerRepo.findById(id)
+//        Player currentPlayer = playerRepo.getPlayer(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException(String.format("Players с таким id:%d не найден", id)));
+
+        validationAndUpdateFieldsPlayer(playerRequestDto, currentPlayer);
+
         return new ResponseEntity<>(
-                mapper.playerToPlayerResponseDto(playerRepo.update(id, playerRequestDto)),
+//                mapper.playerToPlayerResponseDto(playerRepo.update(id, playerRequestDto)),
+                mapper.playerToPlayerResponseDto(playerRepo.save(currentPlayer)),
                 HttpStatus.OK);
     }
 }

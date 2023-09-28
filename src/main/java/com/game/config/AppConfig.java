@@ -42,7 +42,7 @@ public class AppConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan("com.game.domain.entity");
@@ -69,7 +69,7 @@ public class AppConfig {
     private Properties additionalProperties() {
         Properties properties = new Properties();
 //        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 //        properties.put("hibernate.show_sql", "true");
 //        properties.put("hibernate.format_sql", "true");
         properties.put("hibernate.hbm2ddl.auto", "validate");
@@ -79,7 +79,8 @@ public class AppConfig {
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
+//        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+        transactionManager.setEntityManagerFactory(emf);
 
         return transactionManager;
     }
@@ -91,6 +92,6 @@ public class AppConfig {
 
     @Bean
     public EntityManager entityManager() {
-        return Objects.requireNonNull(entityManagerFactoryBean().getObject()).createEntityManager();
+        return Objects.requireNonNull(entityManagerFactory().getObject()).createEntityManager();
     }
 }

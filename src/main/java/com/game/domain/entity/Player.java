@@ -39,7 +39,7 @@ public class Player implements CommonPlayer {
     }
 
     public Player(
-            long id,
+            Long id,
             String name,
             String title,
             Race race,
@@ -84,7 +84,7 @@ public class Player implements CommonPlayer {
         this.untilNextLevel = untilNextLevel;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
